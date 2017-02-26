@@ -69,3 +69,5 @@ The items that follow are optional: strongly advised but not strictly required. 
 1. Screenshots of as many browsers as you can get your hands on, mobile and desktop, even if they're simulators or VMs. These can be emailed to us or committed to the repo.
 
 1. An email notifying somebody from our team that you have completed your work on the quiz.
+
+## First commit has now been made
