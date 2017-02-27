@@ -29,9 +29,9 @@ $(document).ready(function(){
                 var southWestNeighbor = document.elementFromPoint(x-window.slidingPuzzle.tileTotalWidth, y+window.slidingPuzzle.tileTotalWidth);
                 var northWestNeighbor = document.elementFromPoint(x-window.slidingPuzzle.tileTotalWidth, y-window.slidingPuzzle.tileTotalWidth);
 
+                //a right neighbor can only be considered the empty square if either the northeast or southeast neighbor is a tile (otherwise the right neighbor of a tile could potentially land on the right border of the puzzle which will still return 'sliding-puzzle' as the class name; but this will be a false flag, rather than an actual empty square)
                 if (rightNeighbor && rightNeighbor.className == 'sliding-puzzle' && 
                     ((northEastNeighbor && northEastNeighbor.className == 'tile') || (southEastNeighbor && southEastNeighbor.className == 'tile'))
-                    //a right neighbor can only be considered the empty square if either the northeast or southeast neighbor is a tile (otherwise the right neighbor of a tile could potentially land on the right border of the puzzle which will still return 'sliding-puzzle' as the class name; but this will be a false flag, rather than an actual empty square)
                 ){
                     slideOffset.x = window.slidingPuzzle.tileTotalWidth;
                     slideOffset.y = 0;
@@ -44,9 +44,9 @@ $(document).ready(function(){
                     slideOffset.y = window.slidingPuzzle.tileTotalWidth;
                 }
 
+                //a diagonal neighbor check may not be necessary for testing if a left neighbor (or top neighbor) is an empty square; however it is still done to be consistent and to be safe in case the padding+border of the puzzle is ever changed to be >= the width of a tile - then a false flag could still happen in this case
                 else if (leftNeighbor && leftNeighbor.className == 'sliding-puzzle' && 
                     ((southWestNeighbor && southWestNeighbor.className == 'tile') || (northWestNeighbor && northWestNeighbor.className == 'tile'))
-                    //a diagonal neighbor check may not be necessary for testing if a left neighbor (or top neighbor) is an empty square; however it is still done to be consistent and to be safe in case the padding+border of the puzzle is ever changed to be >= the width of a tile - then a false flag could still happen in this case
                 ){
                     slideOffset.x = -window.slidingPuzzle.tileTotalWidth;
                     slideOffset.y = 0;
