@@ -54,31 +54,31 @@ $(document).ready(function(){
                 var northWestNeighbor = document.elementFromPoint(x-window.slidingPuzzle.tileTotalWidth, y-window.slidingPuzzle.tileTotalWidth);
 
                 //a right neighbor can only be considered the empty square if either the northeast or southeast neighbor is a tile (otherwise the right neighbor of a tile could potentially land on the right border of the puzzle which will still return 'sliding-puzzle' as the class name; but this will be a false flag, rather than an actual empty square)
-                if (rightNeighbor && rightNeighbor.className == 'sliding-puzzle' && 
-                    ((northEastNeighbor && northEastNeighbor.className == 'tile') || (southEastNeighbor && southEastNeighbor.className == 'tile'))
-                ){
+                if ( rightNeighbor && rightNeighbor.className == 'sliding-puzzle' && 
+                    ((northEastNeighbor && northEastNeighbor.className == 'tile') || (southEastNeighbor && southEastNeighbor.className == 'tile')) )
+                {
                     slideOffset.x = window.slidingPuzzle.tileTotalWidth;
                     slideOffset.y = 0;
                 }
 
-                else if (bottomNeighbor && bottomNeighbor.className == 'sliding-puzzle' && 
-                    ((southEastNeighbor && southEastNeighbor.className == 'tile') || (southWestNeighbor && southWestNeighbor.className == 'tile'))
-                ){
+                else if ( bottomNeighbor && bottomNeighbor.className == 'sliding-puzzle' && 
+                    ((southEastNeighbor && southEastNeighbor.className == 'tile') || (southWestNeighbor && southWestNeighbor.className == 'tile')) )
+                {
                     slideOffset.x = 0;
                     slideOffset.y = window.slidingPuzzle.tileTotalWidth;
                 }
 
                 //a diagonal neighbor check may not be necessary for testing if a left neighbor (or top neighbor) is an empty square; however it is still done to be consistent and to be safe in case the padding+border of the puzzle is ever changed to be >= the width of a tile - then a false flag could still happen in this case
-                else if (leftNeighbor && leftNeighbor.className == 'sliding-puzzle' && 
-                    ((southWestNeighbor && southWestNeighbor.className == 'tile') || (northWestNeighbor && northWestNeighbor.className == 'tile'))
-                ){
+                else if ( leftNeighbor && leftNeighbor.className == 'sliding-puzzle' && 
+                    ((southWestNeighbor && southWestNeighbor.className == 'tile') || (northWestNeighbor && northWestNeighbor.className == 'tile')) )
+                {
                     slideOffset.x = -window.slidingPuzzle.tileTotalWidth;
                     slideOffset.y = 0;
                 }
 
-                else if (topNeighbor && topNeighbor.className == 'sliding-puzzle' && 
-                    ((northWestNeighbor && northWestNeighbor.className == 'tile') || (northEastNeighbor && northEastNeighbor.className == 'tile'))
-                ){
+                else if ( topNeighbor && topNeighbor.className == 'sliding-puzzle' && 
+                    ((northWestNeighbor && northWestNeighbor.className == 'tile') || (northEastNeighbor && northEastNeighbor.className == 'tile')) )
+                {
                     slideOffset.x = 0;
                     slideOffset.y = -window.slidingPuzzle.tileTotalWidth;
                 }
@@ -88,43 +88,47 @@ $(document).ready(function(){
 
     window.slidingPuzzle.moveElement = 
         function(elem,offset){
+            elemXStart = parseInt(elem.style.left || 0)
+            elemYStart = parseInt(elem.style.top || 0)
             var slideDelay = 30;//delay for slide animation
             if (offset.x){//if !=0
                 var xSign = offset.x/Math.abs(offset.x);
-                window.slidingPuzzle.nextFrameX(elem,offset,xSign,slideDelay);
+                window.slidingPuzzle.nextFrameX(elem,elemXStart,offset.x,xSign,slideDelay);
             }
             if(offset.y){
                 var ySign = offset.y/Math.abs(offset.y);
-                window.slidingPuzzle.nextFrameY(elem,offset,ySign,slideDelay);
+                window.slidingPuzzle.nextFrameY(elem,elemYStart,offset.y,ySign,slideDelay);
             }
         }
 
-    window.slidingPuzzle.nextFrameX = function(elem,offset,sign,slideDelay) {
+    window.slidingPuzzle.nextFrameX = function(elem,elemXStart,xOffset,sign,slideDelay) {
         for(let i=0;i<10;i++){//slide 10 pixels for each delay count to speed things up
-            if(parseInt(elem.style.left||0) != offset.x){//check each time if offset target is reached
+            if( Math.abs(elemXStart - parseInt(elem.style.left || 0) ) < Math.abs(xOffset) )//whether sliding left or right, the distance between the starting x-position and the current x-position can't exceed the desired sliding distance
+            {
                 elem.style.left = (parseInt(elem.style.left||0)+sign)+'px';
             }
-            else{
-              return;
+            else {
+                return;
             }
         }
-            setTimeout(function(){
-                window.slidingPuzzle.nextFrameX(elem,offset,sign,slideDelay)
-            }, slideDelay);
+        setTimeout(function(){
+            window.slidingPuzzle.nextFrameX(elem,elemXStart,xOffset,sign,slideDelay)
+        }, slideDelay);
     }
 
-    window.slidingPuzzle.nextFrameY = function(elem,offset,sign,slideDelay) {
+    window.slidingPuzzle.nextFrameY = function(elem,elemYStart,yOffset,sign,slideDelay) {
         for(let i=0;i<10;i++){
-            if(parseInt(elem.style.top||0) != offset.y){
+            if( Math.abs(elemYStart - parseInt(elem.style.top || 0) ) < Math.abs(yOffset) )//whether sliding up or down, the distance between the starting y-position and the current y-position can't exceed the desired sliding distance
+            {
                 elem.style.top = (parseInt(elem.style.top||0)+sign)+'px';
             }
-            else{
-              return;
+            else {
+                return;
             }
         }
-            setTimeout(function(){
-              window.slidingPuzzle.nextFrameY(elem,offset,sign,slideDelay)
-            }, slideDelay);
+        setTimeout(function(){
+          window.slidingPuzzle.nextFrameY(elem,elemYStart,yOffset,sign,slideDelay)
+        }, slideDelay);
     }
 
 });
