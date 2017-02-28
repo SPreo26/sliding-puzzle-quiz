@@ -3,12 +3,14 @@ $(document).ready(function(){
         var valuesArray = [];
         var tiles = $('.sliding-puzzle').children('.tile');
         tiles.each(function(index,item){
-          valuesArray.push($(item).text())
+          valuesArray.push($(item).text());
         });
         window.slidingPuzzle.shuffleArray(valuesArray);
         tiles.each(function(index,item){
-          $(item).text(valuesArray[index])
+          $(item).text(valuesArray[index]);
+          $(item).css({'left':'0px','top':'0px'});//move each tile back to starting position to make sure the empty square is at the bottom right
         });
+
     }
 
     window.slidingPuzzle = {};
@@ -86,8 +88,43 @@ $(document).ready(function(){
 
     window.slidingPuzzle.moveElement = 
         function(elem,offset){
-            elem.style.left = (parseInt(elem.style.left||0)+offset.x)+'px';
-            elem.style.top = (parseInt(elem.style.top||0)+offset.y)+'px';
+            var slideDelay = 30;//delay for slide animation
+            if (offset.x){//if !=0
+                var xSign = offset.x/Math.abs(offset.x);
+                window.slidingPuzzle.nextFrameX(elem,offset,xSign,slideDelay);
+            }
+            if(offset.y){
+                var ySign = offset.y/Math.abs(offset.y);
+                window.slidingPuzzle.nextFrameY(elem,offset,ySign,slideDelay);
+            }
         }
+
+    window.slidingPuzzle.nextFrameX = function(elem,offset,sign,slideDelay) {
+        for(let i=0;i<10;i++){//slide 10 pixels for each delay count to speed things up
+            if(parseInt(elem.style.left||0) != offset.x){//check each time if offset target is reached
+                elem.style.left = (parseInt(elem.style.left||0)+sign)+'px';
+            }
+            else{
+              return;
+            }
+        }
+            setTimeout(function(){
+                window.slidingPuzzle.nextFrameX(elem,offset,sign,slideDelay)
+            }, slideDelay);
+    }
+
+    window.slidingPuzzle.nextFrameY = function(elem,offset,sign,slideDelay) {
+        for(let i=0;i<10;i++){
+            if(parseInt(elem.style.top||0) != offset.y){
+                elem.style.top = (parseInt(elem.style.top||0)+sign)+'px';
+            }
+            else{
+              return;
+            }
+        }
+            setTimeout(function(){
+              window.slidingPuzzle.nextFrameY(elem,offset,sign,slideDelay)
+            }, slideDelay);
+    }
 
 });
