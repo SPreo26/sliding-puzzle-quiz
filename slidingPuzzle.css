@@ -1,39 +1,79 @@
-.sliding-puzzle-figure {
+@media screen and (max-device-width:799px) {
+    .sliding-puzzle-figure {
     font-family: Helvetica;
     margin-top: 32px;
     margin-left: 32px;
+    }
+    .sliding-puzzle-figure figcaption {
+        margin-top: 5px;
+        margin-left: 20px;
+        font-size: 19px;
+        font-style: italic;
+    }
+    .sliding-puzzle {
+        width: 60vw;
+        height: 60vw;
+        font-size: 0;/*prevents dead space b/w tiltes within each row*/
+        border-radius: 6px;
+        border-width: 9px;
+        border-color: black;
+        border-style: solid;
+        padding-left: 0px;
+        background-color: black;
+    }
+    .tile {
+        display: inline-block;
+        position: relative;
+        width: 19.75%;
+        height: 19.75%;
+        border-width: 5px;
+        border-top-color: #CFCFCF;
+        border-left-color: #CFCFCF;
+        border-right-color: #787878;
+        border-bottom-color: #787878;
+        border-style: solid;
+        margin: 0;
+        background-color: white;
+        text-align: center;
+    }
 }
-.sliding-puzzle-figure figcaption {
-    margin-top: 5px;
-    margin-left: 20px;
-    font-size: 19px;
-    font-style: italic;
-}
-.sliding-puzzle {
-    font-size: 0;/*prevents dead space b/w tiltes within each row*/
-    width: 268px;
-    height: 268px;
-    border-radius: 6px;
-    border-width: 9px;
-    border-color: black;
-    border-style: solid;
-    padding-left: 0px;
-    background-color: black;
-}
-.tile {
-    display: inline-block;
-    position: relative;
-    font-size: 30px;
-    width: 57px;
-    height: 57px;
-    line-height: 57px;
-    border-width: 5px;
-    border-top-color: #CFCFCF;
-    border-left-color: #CFCFCF;
-    border-right-color: #787878;
-    border-bottom-color: #787878;
-    border-style: solid;
-    margin: 0;
-    background-color: white;
-    text-align: center;
+
+@media screen and (min-device-width: 800px) {
+    .sliding-puzzle-figure {
+    font-family: Helvetica;
+    margin-top: 32px;
+    margin-left: 32px;
+    }
+    .sliding-puzzle-figure figcaption {
+        margin-top: 5px;
+        margin-left: 20px;
+        font-size: 19px;
+        font-style: italic;
+    }
+    .sliding-puzzle {
+        font-size: 0;/*prevents dead space b/w tiltes within each row*/
+        width: 268px;
+        height: 268px;
+        border-radius: 6px;
+        border-width: 9px;
+        border-color: black;
+        border-style: solid;
+        padding-left: 0px;
+        background-color: black;
+    }
+    .tile {
+        display: inline-block;
+        position: relative;
+        width: 57px;
+        height: 57px;
+        border-width: 5px;
+        border-top-color: #CFCFCF;
+        border-left-color: #CFCFCF;
+        border-right-color: #787878;
+        border-bottom-color: #787878;
+        border-style: solid;
+        margin: 0;
+        background-color: white;
+        text-align: center;
+    }
 }
