@@ -1,4 +1,16 @@
 $(document).ready(function(){
+    window.shuffleTiles = function(array) {
+        var valuesArray = [];
+        var tiles = $('.sliding-puzzle').children('.tile');
+        tiles.each(function(index,item){
+          valuesArray.push($(item).text())
+        });
+        window.slidingPuzzle.shuffleArray(valuesArray);
+        tiles.each(function(index,item){
+          $(item).text(valuesArray[index])
+        });
+    }
+
     window.slidingPuzzle = {};
 
     document.body.onclick = function(event){
@@ -9,6 +21,16 @@ $(document).ready(function(){
                 window.slidingPuzzle.moveElement(elem,slideOffset);
             }
         }
+    }
+
+    window.slidingPuzzle.shuffleArray = function (array) {
+        let counter = array.length;
+        while (counter > 0) {
+            let index = Math.floor(Math.random() * counter);
+            counter--;
+            [array[counter],array[index]]=[array[index],array[counter]];
+        }
+        return array;
     }
 
     window.slidingPuzzle.tileTotalWidth = 67;
