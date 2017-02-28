@@ -117,7 +117,7 @@ $(document).ready(function(){
     }
 
     window.slidingPuzzle.nextFrameY = function(elem,elemYStart,yOffset,sign,slideDelay) {
-        for(let i=0;i<10;i++){
+        for(let i=0;i<10;i++){//slide 10 pixels for each delay count to speed things up
             if( Math.abs(elemYStart - parseInt(elem.style.top || 0) ) < Math.abs(yOffset) )//whether sliding up or down, the distance between the starting y-position and the current y-position can't exceed the desired sliding distance
             {
                 elem.style.top = (parseInt(elem.style.top||0)+sign)+'px';
